@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCollectionViewCell" id="gTV-IL-0wX" customClass="MovieCollectionViewCell" customModule="MovieDemoAppTMDBAPI" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="171" height="284"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="171" height="284"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xAs-Nb-Q2u">
+                        <rect key="frame" x="0.0" y="0.0" width="171" height="243"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZP-JG-z0v">
+                        <rect key="frame" x="0.0" y="253" width="171" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="nZP-JG-z0v" secondAttribute="bottom" constant="10" id="462-9W-2YF"/>
+                <constraint firstItem="xAs-Nb-Q2u" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="MVg-Oc-fx4"/>
+                <constraint firstItem="nZP-JG-z0v" firstAttribute="top" secondItem="xAs-Nb-Q2u" secondAttribute="bottom" constant="10" id="TGL-JU-TsT"/>
+                <constraint firstItem="xAs-Nb-Q2u" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="gUz-mr-41I"/>
+                <constraint firstItem="nZP-JG-z0v" firstAttribute="centerX" secondItem="xAs-Nb-Q2u" secondAttribute="centerX" id="qEF-of-BxT"/>
+                <constraint firstItem="nZP-JG-z0v" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="vNl-O8-uSq"/>
+                <constraint firstAttribute="trailing" secondItem="xAs-Nb-Q2u" secondAttribute="trailing" id="wnS-Nl-8vM"/>
+            </constraints>
+            <size key="customSize" width="171" height="284"/>
+            <connections>
+                <outlet property="ImageView" destination="xAs-Nb-Q2u" id="gAX-HW-DaD"/>
+                <outlet property="MovieNameLabel" destination="nZP-JG-z0v" id="dSr-7f-346"/>
+            </connections>
+            <point key="canvasLocation" x="-164.49275362318841" y="-37.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

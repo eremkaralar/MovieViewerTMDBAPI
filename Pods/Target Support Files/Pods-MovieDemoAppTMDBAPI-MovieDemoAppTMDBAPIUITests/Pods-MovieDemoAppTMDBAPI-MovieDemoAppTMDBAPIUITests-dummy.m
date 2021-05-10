@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_MovieDemoAppTMDBAPI_MovieDemoAppTMDBAPIUITests : NSObject
+@end
+@implementation PodsDummy_Pods_MovieDemoAppTMDBAPI_MovieDemoAppTMDBAPIUITests
+@end

@@ -1,0 +1,6 @@
+framework module Pods_MovieDemoAppTMDBAPI_MovieDemoAppTMDBAPIUITests {
+  umbrella header "Pods-MovieDemoAppTMDBAPI-MovieDemoAppTMDBAPIUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
