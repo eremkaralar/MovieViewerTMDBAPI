@@ -10,6 +10,10 @@ import UIKit
 class ViewController: UIViewController {
     
     var searchController : UISearchController!
+    
+    var timer = Timer()
+    
+    var popOverTempView = UIView()
   
     @IBOutlet weak var CollectionView: UICollectionView!
     
@@ -38,6 +42,8 @@ class ViewController: UIViewController {
                layout.minimumLineSpacing = spacing
                layout.minimumInteritemSpacing = spacing
                self.CollectionView?.collectionViewLayout = layout
+        
+        
         
         self.searchController = UISearchController(searchResultsController:nil)
 
@@ -81,14 +87,24 @@ extension ViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         print("Tapped!")
-//        performSegue(withIdentifier: "MovieDetailViewController", sender: nil)
+        let vc = storyboard?.instantiateViewController(identifier: "MovieDetailViewController") as? MovieDetailViewController
+        vc!.Movietitle = posts[indexPath.row].title
+        vc!.Moviereleasedate = posts[indexPath.row].release_date
+        vc!.Movieoverview = posts[indexPath.row].overview
+        vc!.MovieorgLang = posts[indexPath.row].original_language
+        vc!.Moviepopularity = posts[indexPath.row].popularity
+        vc!.MovievoteAverage = posts[indexPath.row].vote_average
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
+
 }
 
 extension ViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
     }
+    
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as! MovieCollectionViewCell
         

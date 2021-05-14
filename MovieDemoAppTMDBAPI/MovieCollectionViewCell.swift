@@ -11,7 +11,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var ImageView: UIImageView!
     @IBOutlet weak var MovieNameLabel: UILabel!
     
-    var representedIdentifier: String = ""
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

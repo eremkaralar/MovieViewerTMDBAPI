@@ -13,15 +13,15 @@ struct MovieResponse: Decodable {
 }
 
 struct Movie : Codable{
-        let id: Int
-        let title: String
-//        let posterPath: String?
+        var id: Int
+        var title: String
         var poster_path : String
+        var overview: String
+        var release_date: String
+        var original_language: String
+        var popularity: Double
+        var vote_average: Double
         var posterURL: URL {
-            return URL(string: "https://image.tmdb.org/t/p/w500\(poster_path ?? "")")!
+            return URL(string: "https://image.tmdb.org/t/p/w500\(poster_path )")!
         }
-}
-struct MovieUrls : Codable{
-    let posterPath: String
-    //var regular : String
 }

@@ -33,7 +33,7 @@ class NetworkManager {
   
     
     func getMovies(name:String,completion: @escaping ([Movie]?, Error?) -> (Void)) {
-        let accessKey = "b148f6d9dfd3238df04d11edb3d3dfad"
+        let accessKey = ""
         let baseURL = "https://api.themoviedb.org/3/search/movie?api_key=" + accessKey + "&query=" + name
         
     
@@ -87,8 +87,6 @@ class NetworkManager {
     }
     
     func image(post: Movie, completion: @escaping (Data?, Error?) -> (Void)) {
-//        let url = URL(resolvingAliasFileAt: post.posterURL)
-//      download(imageURL: url, completion: completion)
         
         do {
             let url = try URL(resolvingAliasFileAt: post.posterURL)
