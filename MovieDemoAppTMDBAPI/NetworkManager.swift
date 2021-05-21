@@ -33,14 +33,13 @@ class NetworkManager {
   
     
     func getMovies(name:String,completion: @escaping ([Movie]?, Error?) -> (Void)) {
-        let accessKey = ""
+        let accessKey = "b148f6d9dfd3238df04d11edb3d3dfad"
         let baseURL = "https://api.themoviedb.org/3/search/movie?api_key=" + accessKey + "&query=" + name
         
     
         let requestURL = URL(string: baseURL)!
         
         AF.request(requestURL).responseJSON { data in
-            print(data)
             do {
                 let response = try JSONDecoder().decode(APIResponse.self, from: data.data!)
               completion(response.results, nil)

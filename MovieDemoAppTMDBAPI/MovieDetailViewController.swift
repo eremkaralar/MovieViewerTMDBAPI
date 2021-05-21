@@ -20,13 +20,13 @@ class MovieDetailViewController: UIViewController {
     
     var MainViewController : ViewController?
     
-    
-    var Movietitle = ""
-    var Movieoverview = ""
-    var Moviereleasedate = ""
-    var MovieorgLang = ""
-    var Moviepopularity : Double = 0.0
-    var MovievoteAverage : Double = 0.0
+    var MovieDetail : Movie?
+//    var Movietitle = ""
+//    var Movieoverview = ""
+//    var Moviereleasedate = ""
+//    var MovieorgLang = ""
+//    var Moviepopularity : Double = 0.0
+//    var MovievoteAverage : Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +35,20 @@ class MovieDetailViewController: UIViewController {
        
         self.navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .never
-        self.navigationItem.title = Movietitle
-      
-
-        MovieRDate.text = "Release Date: \(Moviereleasedate)"
-        MovieDescription.text = "Description: \(Movieoverview)"
-        orgLang.text = "Original Language: \(MovieorgLang)"
-        popularityRate.text = "Popularity Rate: \(Moviepopularity)"
-        voteAverage.text = "Vote Average: \(MovievoteAverage)"
+       
+        guard let movie = MovieDetail else{
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
+        
+        self.navigationItem.title = movie.title
+        
+        MovieRDate.text = "Release Date: \(movie.release_date)"
+        MovieDescription.text = "Description: \(movie.overview)"
+        MovieDescription.adjustsFontSizeToFitWidth = true
+        orgLang.text = "Original Language: \(movie.original_language)"
+        popularityRate.text = "Popularity Rate: \(movie.popularity)"
+        voteAverage.text = "Vote Average: \(movie.vote_average)"
     }
     /*
     // MARK: - Navigation

@@ -10,10 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var searchController : UISearchController!
-    
-    var timer = Timer()
-    
-    var popOverTempView = UIView()
+
   
     @IBOutlet weak var CollectionView: UICollectionView!
     
@@ -23,6 +20,7 @@ class ViewController: UIViewController {
     
     
     private let spacing: CGFloat = 10
+    
     
     
     override func viewDidLoad() {
@@ -59,26 +57,42 @@ class ViewController: UIViewController {
          searchController.searchBar.becomeFirstResponder()
 
         self.navigationItem.titleView = searchController.searchBar
-        
-        NetworkManager.shared.getMovies(name: "Star") { (data, Error) -> (Void) in
-            self.posts = data!
-            self.CollectionView.reloadData()
-        }
-        
-              DispatchQueue.main.async {
-                self.CollectionView.reloadData()
-            }
+
         }
     }
         
  
 extension ViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard searchBar.text != nil else { return }
+        if(searchController.searchBar.text == nil){
+            searchController.searchBar.text = "Star"
+        }
+        NetworkManager.shared.getMovies(name: searchBar.text!) { (data, Error) -> (Void) in
+            if(data == nil){
+                    
+            }
+            else{
+            self.posts = data!
+            self.CollectionView.reloadData()
+            }
+        }
+        
+              DispatchQueue.main.async {
+                self.CollectionView.reloadData()
+            }
+       
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         print("Updating")
+       
+        
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.dismiss(animated: true, completion: nil)
+        
     }
 }
 
@@ -88,12 +102,16 @@ extension ViewController: UICollectionViewDelegate{
         collectionView.deselectItem(at: indexPath, animated: true)
         print("Tapped!")
         let vc = storyboard?.instantiateViewController(identifier: "MovieDetailViewController") as? MovieDetailViewController
-        vc!.Movietitle = posts[indexPath.row].title
-        vc!.Moviereleasedate = posts[indexPath.row].release_date
-        vc!.Movieoverview = posts[indexPath.row].overview
-        vc!.MovieorgLang = posts[indexPath.row].original_language
-        vc!.Moviepopularity = posts[indexPath.row].popularity
-        vc!.MovievoteAverage = posts[indexPath.row].vote_average
+        
+        vc?.MovieDetail = posts[indexPath.row]
+        
+        
+//        vc!.Movietitle = posts[indexPath.row].title
+//        vc!.Moviereleasedate = posts[indexPath.row].release_date
+//        vc!.Movieoverview = posts[indexPath.row].overview
+//        vc!.MovieorgLang = posts[indexPath.row].original_language
+//        vc!.Moviepopularity = posts[indexPath.row].popularity
+//        vc!.MovievoteAverage = posts[indexPath.row].vote_average
         self.navigationController?.pushViewController(vc!, animated: true)
     }
 
@@ -101,6 +119,12 @@ extension ViewController: UICollectionViewDelegate{
 
 extension ViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if (posts.count == 0) {
+                collectionView.setEmptyMessage("It's been a slow year \n Nothing much to show here...")
+            }
+        else{
+            collectionView.restore()
+        }
         return posts.count
     }
     
@@ -126,6 +150,7 @@ extension ViewController: UICollectionViewDataSource{
               }
               return UIImage(systemName: "picture")
             }
+        
         
         
         networker.image(post: post) { data, error  in
@@ -155,8 +180,25 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
                 }else{
                     return CGSize(width: 0, height: 0)
                 }
+
     }
-    
     
 }
 
+extension UICollectionView {
+    func setEmptyMessage(_ message: String) {
+            let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+            messageLabel.text = message
+            messageLabel.textColor = .black
+            messageLabel.numberOfLines = 0;
+            messageLabel.textAlignment = .center;
+            messageLabel.font = UIFont(name: "HelveticaNeue-UltraLight", size: 30)
+            messageLabel.sizeToFit()
+
+            self.backgroundView = messageLabel;
+        }
+    
+    func restore() {
+           self.backgroundView = nil
+       }
+}
