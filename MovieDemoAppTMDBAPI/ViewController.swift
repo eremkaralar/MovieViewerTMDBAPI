@@ -10,19 +10,66 @@ import UIKit
 class ViewController: UIViewController {
     
     var searchController : UISearchController!
-
-  
-    @IBOutlet weak var CollectionView: UICollectionView!
     
     let networker = NetworkManager.shared
       
     var posts: [Movie] = []
     
-    
     private let spacing: CGFloat = 10
     
+    var randosearchWords : [String] = ["Star","Red","Blue","Baby","Fun","Do","Can"]
+    var randoNum = Int.random(in: 0..<6)
+//    let defaultsearch = randosearchWords[randoNum]
+    //var defaultsearch = "Star"
     
+ 
+    @IBAction func SegmentSelected(_ sender: Any) {
+        if (sender as AnyObject).selectedSegmentIndex == 0 {
+            let defaultsearch = randosearchWords[randoNum]
+            NetworkManager.shared.getMovies(name: defaultsearch) { (data, Error) -> (Void) in
+                if(data == nil){
+                }
+                else{
+                self.posts = data!
+                self.CollectionView.reloadData()
+                }
+            }
+                  DispatchQueue.main.async {
+                    self.CollectionView.reloadData()
+                }
+        }
+         if (sender as AnyObject).selectedSegmentIndex == 1 {
+            NetworkManager.shared.getpopularMovies{(data, Error) -> (Void) in
+                if(data == nil){
+                }
+                else{
+                self.posts = data!
+                self.CollectionView.reloadData()
+                }
+            }
+                  DispatchQueue.main.async {
+                    self.CollectionView.reloadData()
+                }
+        }
+        else if (sender as AnyObject).selectedSegmentIndex == 2 {
+            NetworkManager.shared.getupcomingMovies{(data, Error) -> (Void) in
+                if(data == nil){
+                }
+                else{
+                self.posts = data!
+                self.CollectionView.reloadData()
+                }
+            }
+                  DispatchQueue.main.async {
+                    self.CollectionView.reloadData()
+                }
+        }
+    }
     
+    @IBOutlet weak var CollectionView: UICollectionView!
+    
+
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -30,46 +77,14 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "The TMDB Movies"
         
+       
         
         CollectionView.delegate = self
         CollectionView.dataSource = self
         CollectionView.register(MovieCollectionViewCell.nib(), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         
-        let layout = UICollectionViewFlowLayout()
-               layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-               layout.minimumLineSpacing = spacing
-               layout.minimumInteritemSpacing = spacing
-               self.CollectionView?.collectionViewLayout = layout
-        
-        
-        
-        self.searchController = UISearchController(searchResultsController:nil)
-
-         self.searchController.searchResultsUpdater = self
-         self.searchController.delegate = self
-         self.searchController.searchBar.delegate = self
-
-         self.searchController.hidesNavigationBarDuringPresentation = false
-         
-         self.searchController.obscuresBackgroundDuringPresentation = false
-
-
-         searchController.searchBar.becomeFirstResponder()
-
-        self.navigationItem.titleView = searchController.searchBar
-
-        }
-    }
-        
- 
-extension ViewController: UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating {
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard searchBar.text != nil else { return }
-        if(searchController.searchBar.text == nil){
-            searchController.searchBar.text = "Star"
-        }
-        NetworkManager.shared.getMovies(name: searchBar.text!) { (data, Error) -> (Void) in
+        let defaultsearch = randosearchWords[randoNum]
+        NetworkManager.shared.getMovies(name: defaultsearch) { (data, Error) -> (Void) in
             if(data == nil){
                     
             }
@@ -82,13 +97,42 @@ extension ViewController: UISearchControllerDelegate, UISearchBarDelegate, UISea
               DispatchQueue.main.async {
                 self.CollectionView.reloadData()
             }
-       
-    }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        print("Updating")
-       
+              
+        let layout = UICollectionViewFlowLayout()
+               layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+               layout.minimumLineSpacing = spacing
+               layout.minimumInteritemSpacing = spacing
+               self.CollectionView?.collectionViewLayout = layout
         
+       
+        self.searchController = UISearchController(searchResultsController:nil)
+
+        
+         self.searchController.delegate = self
+         self.searchController.searchBar.delegate = self
+         self.searchController.hidesNavigationBarDuringPresentation = false
+         self.searchController.obscuresBackgroundDuringPresentation = false
+         searchController.searchBar.becomeFirstResponder()
+        self.navigationItem.titleView = searchController.searchBar
+        }
+    }
+extension ViewController: UISearchControllerDelegate, UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard searchBar.text != nil else { return }
+        if(searchController.searchBar.text == nil){
+            searchController.searchBar.text = "Star"
+        }
+        NetworkManager.shared.getMovies(name: searchBar.text!) { (data, Error) -> (Void) in
+            if(data == nil){
+            }
+            else{
+            self.posts = data!
+            self.CollectionView.reloadData()
+            }
+        }
+              DispatchQueue.main.async {
+                self.CollectionView.reloadData()
+            }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.dismiss(animated: true, completion: nil)
@@ -96,22 +140,13 @@ extension ViewController: UISearchControllerDelegate, UISearchBarDelegate, UISea
     }
 }
 
-
 extension ViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        print("Tapped!")
         let vc = storyboard?.instantiateViewController(identifier: "MovieDetailViewController") as? MovieDetailViewController
-        
+       
         vc?.MovieDetail = posts[indexPath.row]
-        
-        
-//        vc!.Movietitle = posts[indexPath.row].title
-//        vc!.Moviereleasedate = posts[indexPath.row].release_date
-//        vc!.Movieoverview = posts[indexPath.row].overview
-//        vc!.MovieorgLang = posts[indexPath.row].original_language
-//        vc!.Moviepopularity = posts[indexPath.row].popularity
-//        vc!.MovievoteAverage = posts[indexPath.row].vote_average
+
         self.navigationController?.pushViewController(vc!, animated: true)
     }
 
@@ -151,8 +186,6 @@ extension ViewController: UICollectionViewDataSource{
               return UIImage(systemName: "picture")
             }
         
-        
-        
         networker.image(post: post) { data, error  in
           let img = image(data: data)
           DispatchQueue.main.async {
@@ -180,9 +213,7 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
                 }else{
                     return CGSize(width: 0, height: 0)
                 }
-
-    }
-    
+    }    
 }
 
 extension UICollectionView {

@@ -50,6 +50,37 @@ class NetworkManager {
         }
         
     }
+    
+    func getupcomingMovies(completion: @escaping ([Movie]?, Error?) -> (Void)) {
+        let accessKey = "b148f6d9dfd3238df04d11edb3d3dfad"
+        let baseURL = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + accessKey + "&language=en-US&page=1"
+        let requestURL = URL(string: baseURL)!
+        
+        AF.request(requestURL).responseJSON { data in
+            do {
+                let response = try JSONDecoder().decode(APIResponse.self, from: data.data!)
+              completion(response.results, nil)
+            } catch let error {
+              completion(nil, error)
+            }
+        }
+    }
+    
+    func getpopularMovies(completion: @escaping ([Movie]?, Error?) -> (Void)) {
+        let accessKey = "b148f6d9dfd3238df04d11edb3d3dfad"
+        let baseURL = "https://api.themoviedb.org/3/movie/popular?api_key=" + accessKey + "&language=en-US"
+        let requestURL = URL(string: baseURL)!
+        
+        AF.request(requestURL).responseJSON { data in
+            do {
+                let response = try JSONDecoder().decode(APIResponse.self, from: data.data!)
+              completion(response.results, nil)
+            } catch let error {
+              completion(nil, error)
+            }
+        }
+    }
+  
     private func download(imageURL: URL, completion: @escaping (Data?, Error?) -> (Void)) {
       if let imageData = images.object(forKey: imageURL.absoluteString as NSString) {
        

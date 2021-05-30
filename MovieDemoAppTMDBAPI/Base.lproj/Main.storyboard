@@ -17,6 +17,9 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ii2-Dw-bHR">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="y7g-ha-uvE"/>
                     </connections>
@@ -74,7 +77,23 @@
                             <constraint firstItem="CwZ-ec-odA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="q0G-uT-SxA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="mSZ-Mm-nkq"/>
+                    <navigationItem key="navigationItem" id="mSZ-Mm-nkq">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Segment" id="ON2-Sn-OTJ">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ftU-U0-UPf">
+                                <rect key="frame" x="20" y="5" width="248" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Random"/>
+                                    <segment title="Popular"/>
+                                    <segment title="Upcoming"/>
+                                </segments>
+                                <connections>
+                                    <action selector="SegmentSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="ti0-AV-4Lq"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="CollectionView" destination="CwZ-ec-odA" id="Meu-Sy-iy8"/>
                         <segue destination="yf8-eT-9hW" kind="show" id="T0U-Zh-d3J"/>
@@ -116,17 +135,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fG3-rO-fCZ">
-                                <rect key="frame" x="20" y="231" width="374" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="irR-iI-3ku"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FeO-PK-ZvR">
+                                <rect key="frame" x="20" y="132" width="374" height="55"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FeO-PK-ZvR">
-                                <rect key="frame" x="20" y="132" width="374" height="55"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fG3-rO-fCZ">
+                                <rect key="frame" x="20" y="289" width="374" height="272"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="272" id="irR-iI-3ku"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -136,9 +155,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="sKA-uT-C8H" firstAttribute="trailing" secondItem="FeO-PK-ZvR" secondAttribute="trailing" id="BXt-QZ-bSl"/>
+                            <constraint firstItem="sKA-uT-C8H" firstAttribute="top" secondItem="FeO-PK-ZvR" secondAttribute="bottom" constant="8" id="E1H-IC-pQo"/>
                             <constraint firstItem="FeO-PK-ZvR" firstAttribute="top" secondItem="94h-Ed-cbL" secondAttribute="bottom" constant="-2" id="Elk-ju-jsa"/>
-                            <constraint firstItem="fG3-rO-fCZ" firstAttribute="top" secondItem="QjB-OD-eTh" secondAttribute="bottom" constant="-49.5" id="KcQ-5T-Xv1"/>
+                            <constraint firstItem="fG3-rO-fCZ" firstAttribute="top" secondItem="QjB-OD-eTh" secondAttribute="bottom" constant="8.5" id="KcQ-5T-Xv1"/>
                             <constraint firstItem="sKA-uT-C8H" firstAttribute="leading" secondItem="QjB-OD-eTh" secondAttribute="leading" id="RzB-8A-exf"/>
+                            <constraint firstItem="sKA-uT-C8H" firstAttribute="top" secondItem="94h-Ed-cbL" secondAttribute="bottom" constant="61" id="TnD-bk-UZ7"/>
                             <constraint firstItem="sKA-uT-C8H" firstAttribute="top" secondItem="FeO-PK-ZvR" secondAttribute="bottom" constant="8" id="ViO-fT-cEb"/>
                             <constraint firstItem="94h-Ed-cbL" firstAttribute="top" secondItem="ech-uk-gbn" secondAttribute="top" id="Wje-r8-tOS"/>
                             <constraint firstItem="sKA-uT-C8H" firstAttribute="trailing" secondItem="W3R-H1-8em" secondAttribute="trailingMargin" id="Wkt-tx-O0g"/>
